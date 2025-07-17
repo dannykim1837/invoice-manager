@@ -121,7 +121,25 @@ EMAIL_HOST_USER = 'dannykim1837@gmail.com'
 EMAIL_HOST_PASSWORD = 'delc frzi whqr quwa'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-TEMPLATES[0]['DIRS'] = [os.path.join(BASE_DIR, 'frontend', 'build')]
+import os
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'frontend', 'build')], 
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend', 'build', 'static'),
