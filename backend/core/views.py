@@ -11,13 +11,17 @@ from django.urls import reverse
 from django.core.mail import send_mail
 from django.views.generic import TemplateView
 from rest_framework import serializers
+from django.shortcuts import render
+from django.views.generic import View
 
 
 
 
 
-class FrontendAppView(TemplateView):
-    template_name = "index.html"
+
+class FrontendAppView(View):
+    def get(self, request):
+        return render(request, 'frontend/build/index.html')
 
 
 class RegisterSerializer(serializers.ModelSerializer):
