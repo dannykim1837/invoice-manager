@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('core.urls')),
     path('api/accounts/', include('accounts.urls')),
+    
     path('', FrontendAppView.as_view()),
 
 ]

@@ -10,12 +10,37 @@ from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse
 from django.core.mail import send_mail
 from django.views.generic import TemplateView
+from rest_framework import serializers
+
+
 
 
 
 class FrontendAppView(TemplateView):
     template_name = "index.html"
-    
+
+
+class RegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password']
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data.get('email'),
+            password=validated_data['password']
+        )
+        return user
+
+
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = RegisterSerializer
+
 # ViewSet for Invoice model
 class InvoiceViewSet(viewsets.ModelViewSet):
     queryset = Invoice.objects.all()

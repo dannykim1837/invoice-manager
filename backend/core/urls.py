@@ -1,7 +1,7 @@
 # core/urls.py
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import InvoiceViewSet, ExpenseViewSet, ReceiptUploadView, FileUploadView, ChangePasswordView, PasswordResetRequestView, PasswordResetConfirmView
+from .views import InvoiceViewSet, ExpenseViewSet, ReceiptUploadView, FileUploadView, ChangePasswordView, PasswordResetRequestView, PasswordResetConfirmView, RegisterView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 
@@ -18,4 +18,5 @@ urlpatterns = [
     path('change-password/', ChangePasswordView.as_view(), name='change-password'),
     path('password-reset/', PasswordResetRequestView.as_view(), name='password-reset-request'),
     path('api/password-reset-confirm/<int:uid>/<str:token>/', PasswordResetConfirmView.as_view(), name='password-reset-confirm'),
+    path('accounts/register/', RegisterView.as_view(), name='register'),
 ]
