@@ -3,7 +3,6 @@ import TopNav from '../components/TopNav';
 import InvoiceChart from '../components/InvoiceChart';
 import AddInvoice from '../components/AddInvoice';
 import { api, deleteItem } from '../utils/api';
-import { getToken } from '../utils/auth';
 import { usePaginationList } from '../components/usePaginationList';
 import { exportToCSV } from '../utils/exportToCSV';
 import InvoiceReceiptGallery from '../components/InvoiceReceiptGallery';
@@ -16,7 +15,7 @@ const InvoicePage = () => {
 
     const fetchInvoices = async () => {
         try {
-            const res = await api.get('/invoices/');
+            const res = await api.get('/invoices/'); // ✅ axios → api
             setInvoices(res.data);
         } catch (err) {
             console.error("Failed to fetch invoices", err);
@@ -30,8 +29,9 @@ const InvoicePage = () => {
         inv.client.toLowerCase().includes(search.toLowerCase()) ||
         inv.status.toLowerCase().includes(search.toLowerCase());
 
-    const { pagedList, totalPages, currentPage, setCurrentPage } =
-        usePaginationList(invoices, itemsPerPage, search, filterFn, 'due_date');
+    const {
+        pagedList, totalPages, currentPage, setCurrentPage
+    } = usePaginationList(invoices, itemsPerPage, search, filterFn); // ✅ 인자 개수 수정
 
     const handleAddInvoice = async () => {
         await fetchInvoices();
@@ -43,7 +43,7 @@ const InvoicePage = () => {
 
     const handleDelete = async (id) => {
         if (!window.confirm("Delete this invoice?")) return;
-        const ok = await deleteItem(`/invoices/${id}/`); // 수정된 부분
+        const ok = await deleteItem(`/invoices/${id}/`);
         if (ok) setInvoices(prev => prev.filter(inv => inv.id !== id));
         else alert("Failed to delete invoice!");
     };
@@ -85,7 +85,9 @@ const InvoicePage = () => {
                             <button
                                 onClick={() => exportToCSV(invoices, 'invoices')}
                                 disabled={invoices.length === 0}
-                            >Export Invoices CSV</button>
+                            >
+                                Export Invoices CSV
+                            </button>
                         </div>
                     </div>
                     <div className="add-invoice-form-wrapper">
@@ -106,7 +108,9 @@ const InvoicePage = () => {
                                                 className="invoice-delete-btn"
                                                 title="Delete Invoice"
                                                 onClick={() => handleDelete(inv.id)}
-                                            >&#10006;</button>
+                                            >
+                                                &#10006;
+                                            </button>
                                         </div>
                                         <div className="invoice-card-status-row">
                                             <span className={`invoice-status-badge status-${inv.status.toLowerCase()}`}>
@@ -136,8 +140,6 @@ const InvoicePage = () => {
                         )}
                     </div>
                 </section>
-
-                {/* Invoice Receipt Gallery */}
                 <section className="receipt-section">
                     <InvoiceReceiptGallery
                         perPage={7}

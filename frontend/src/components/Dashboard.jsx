@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import api from '../utils/api';
+import { api } from '../utils/api';
 import { getToken } from '../utils/auth';
 import InvoiceChart from './InvoiceChart';
 import ExpenseChart from './ExpenseChart';
