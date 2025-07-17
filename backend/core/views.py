@@ -15,7 +15,7 @@ from django.views.generic import TemplateView
 
 class FrontendAppView(TemplateView):
     template_name = "index.html"
-
+    
 # ViewSet for Invoice model
 class InvoiceViewSet(viewsets.ModelViewSet):
     queryset = Invoice.objects.all()
