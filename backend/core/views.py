@@ -9,7 +9,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse
 from django.core.mail import send_mail
+from django.views.generic import TemplateView
 
+
+
+class FrontendAppView(TemplateView):
+    template_name = "index.html"
 
 # ViewSet for Invoice model
 class InvoiceViewSet(viewsets.ModelViewSet):

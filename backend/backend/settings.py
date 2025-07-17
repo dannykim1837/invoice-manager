@@ -120,3 +120,11 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'dannykim1837@gmail.com'
 EMAIL_HOST_PASSWORD = 'delc frzi whqr quwa'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+TEMPLATES[0]['DIRS'] = [os.path.join(BASE_DIR, 'frontend', 'build')]
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'frontend', 'build', 'static'),
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
