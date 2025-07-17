@@ -3,8 +3,7 @@ import TopNav from '../components/TopNav';
 import ExpenseChart from '../components/ExpenseChart';
 import AddExpense from '../components/AddExpense';
 import { deleteItem } from '../utils/api';
-import axios from 'axios';
-import { getToken } from '../utils/auth';
+import api from '../utils/api';
 import { usePaginationList } from '../components/usePaginationList';
 import { exportToCSV } from '../utils/exportToCSV';
 import ReusableReceiptGallery from './ExpenseReceiptGallery';
@@ -18,9 +17,7 @@ const ExpensePage = () => {
     // Fetch expenses from backend
     const fetchExpenses = async () => {
         try {
-            const res = await axios.get('http://127.0.0.1:8000/api/expenses/', {
-                headers: { Authorization: `Bearer ${getToken()}` },
-            });
+            const res = await api.get('/expenses/');
             setExpenses(res.data);
         } catch (err) {
             console.error('Failed to fetch expenses', err);
@@ -54,7 +51,7 @@ const ExpensePage = () => {
 
     const handleDeleteExpense = async (id) => {
         if (!window.confirm('Delete this expense?')) return;
-        const ok = await deleteItem(`http://127.0.0.1:8000/api/expenses/${id}/`);
+        const ok = await deleteItem(`/expenses/${id}/`);
         if (ok) {
             setExpenses(expenses.filter((exp) => exp.id !== id));
         } else {

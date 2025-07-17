@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { getToken } from '../utils/auth';
 import InvoiceChart from './InvoiceChart';
 import ExpenseChart from './ExpenseChart';
@@ -13,7 +13,7 @@ const Dashboard = () => {
     // Fetch invoices from backend
     const fetchInvoices = async () => {
         try {
-            const res = await axios.get('http://127.0.0.1:8000/api/invoices/', {
+            const res = await api.get('/invoices/', {
                 headers: { Authorization: `Bearer ${getToken()}` },
             });
             setInvoices(res.data);
@@ -25,7 +25,7 @@ const Dashboard = () => {
     // Fetch expenses from backend
     const fetchExpenses = async () => {
         try {
-            const res = await axios.get('http://127.0.0.1:8000/api/expenses/', {
+            const res = await api.get('/expenses/', {
                 headers: { Authorization: `Bearer ${getToken()}` },
             });
             setExpenses(res.data);
@@ -99,4 +99,5 @@ const Dashboard = () => {
         </div>
     );
 };
+
 export default Dashboard;

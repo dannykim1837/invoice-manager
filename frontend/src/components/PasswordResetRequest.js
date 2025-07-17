@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { api } from '../utils/api';
 import '../styles/loginStyle.css';
 import { Link } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ const PasswordResetRequest = () => {
     setMessage('');
     setError('');
     try {
-      await axios.post('http://127.0.0.1:8000/api/password-reset/', { email });
+      await api.post('/password-reset/', { email });
       setMessage('If your email exists in our system, you will receive a password reset email shortly.');
     } catch (err) {
       setError('Failed to send reset email. Please try again later.');

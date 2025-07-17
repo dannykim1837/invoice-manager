@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { getToken } from '../utils/auth';
 
 const AddInvoice = ({ onAdd }) => {
@@ -24,7 +24,7 @@ const AddInvoice = ({ onAdd }) => {
             return;
         }
         try {
-            await axios.post('http://127.0.0.1:8000/api/invoices/', form, {
+            await api.post('/invoices/', form, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setForm({ title: '', client: '', amount: '', due_date: '', status: '' });

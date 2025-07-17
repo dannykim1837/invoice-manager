@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { api } from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/siteStyle.css';
 import '../../styles/registerStyle.css';
-
 
 const RegisterPage = () => {
     const [form, setForm] = useState({
@@ -15,12 +14,10 @@ const RegisterPage = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    // Handle input changes
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
@@ -31,7 +28,7 @@ const RegisterPage = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8000/api/accounts/register/', {
+            const response = await api.post('/accounts/register/', {
                 username: form.username,
                 email: form.email,
                 password: form.password

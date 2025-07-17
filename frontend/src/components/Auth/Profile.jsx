@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { api } from '../../utils/api';
 import { getToken } from '../../utils/auth';
 import TopNav from '../TopNav';
 
 const Profile = () => {
-    // Local states
     const [user, setUser] = useState(null);
     const [loginUser, setLoginUser] = useState(null);
     const [oldPassword, setOldPassword] = useState('');
@@ -12,7 +11,6 @@ const Profile = () => {
     const [newPassword2, setNewPassword2] = useState('');
     const [message, setMessage] = useState('');
 
-    // Load login user from localStorage
     useEffect(() => {
         try {
             const u = JSON.parse(localStorage.getItem('user'));
@@ -20,16 +18,14 @@ const Profile = () => {
         } catch { }
     }, []);
 
-    // Fetch user info
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/user/', {
+        api.get('/user', {
             headers: { Authorization: `Bearer ${getToken()}` }
         })
             .then(res => setUser(res.data))
             .catch(() => setUser(null));
     }, []);
 
-    // Password change handler
     const handlePasswordChange = async (e) => {
         e.preventDefault();
         if (newPassword !== newPassword2) {
@@ -37,7 +33,7 @@ const Profile = () => {
             return;
         }
         try {
-            await axios.post('http://127.0.0.1:8000/api/change-password/', {
+            await api.post('/change-password', {
                 old_password: oldPassword,
                 new_password: newPassword
             }, {
@@ -57,7 +53,6 @@ const Profile = () => {
             <TopNav />
             <div className="profile-outer">
                 <div className="bordered-form profile-form">
-                    {/* Avatar */}
                     <div className="center-image-container">
                         <span className="profile-avatar">
                             <img
@@ -70,14 +65,12 @@ const Profile = () => {
                         </span>
                     </div>
 
-                    {/* Welcome message */}
                     {loginUser && (
                         <div className="center-text" style={{ fontWeight: 'bold', marginBottom: 12, fontSize: 18 }}>
                             Welcome, {loginUser.username || loginUser.email || loginUser.id}!
                         </div>
                     )}
 
-                    {/* Profile info */}
                     <h2>Profile</h2>
                     {user && (
                         <div className="user-info left-align-text">
@@ -87,7 +80,6 @@ const Profile = () => {
                         </div>
                     )}
 
-                    {/* Password change form */}
                     <h3 style={{ textAlign: 'center', marginTop: 30 }}>Change Password</h3>
                     <form className="change-password-form" onSubmit={handlePasswordChange}>
                         <input

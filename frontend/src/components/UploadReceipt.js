@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { storage } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
-const UploadReceipt = ({ onUploaded, folder = 'invoices' }) => {
+const UploadReceipt = ({ onUploaded = () => { }, folder = 'invoices' }) => {
     const [file, setFile] = useState(null);
     const [uploading, setUploading] = useState(false);
     const [message, setMessage] = useState('');
@@ -35,38 +35,49 @@ const UploadReceipt = ({ onUploaded, folder = 'invoices' }) => {
             const storageRef = ref(storage, `${folder}/${fileName}`);
             await uploadBytes(storageRef, file);
             const url = await getDownloadURL(storageRef);
-            setUploading(false);
             setMessage('Upload successful!');
-            onUploaded(url);        // 실제 다운로드 URL 전달!
+            onUploaded(url);
             setFile(null);
             setPreview(null);
         } catch (err) {
-            setUploading(false);
-            setMessage('Upload failed.');
             console.error(err);
+            setMessage('Upload failed.');
+        } finally {
+            setUploading(false);
         }
     };
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <input type="file" onChange={handleFileChange} />
-            <button
-                onClick={handleUpload}
-                disabled={uploading}
-                style={{
-                    background: '#247be7',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: 6,
-                    padding: '6px 16px',
-                    fontWeight: 700,
-                    cursor: uploading ? 'not-allowed' : 'pointer',
-                    marginLeft: 8,
-                }}
-            >
-                {uploading ? 'Uploading...' : 'Upload'}
-            </button>
-            {message && <p style={{ margin: 0, color: uploading ? 'gray' : 'green' }}>{message}</p>}
+        <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <input type="file" onChange={handleFileChange} />
+                <button
+                    onClick={handleUpload}
+                    disabled={uploading}
+                    style={{
+                        background: '#247be7',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: 6,
+                        padding: '6px 16px',
+                        fontWeight: 700,
+                        cursor: uploading ? 'not-allowed' : 'pointer',
+                        marginLeft: 8,
+                    }}
+                >
+                    {uploading ? 'Uploading...' : 'Upload'}
+                </button>
+                {message && (
+                    <p style={{
+                        margin: 0,
+                        color: message.toLowerCase().includes('fail') ? 'red' :
+                            message.toLowerCase().includes('upload') ? 'gray' : 'green'
+                    }}>
+                        {message}
+                    </p>
+                )}
+            </div>
+
             {preview && (
                 <img
                     src={preview}

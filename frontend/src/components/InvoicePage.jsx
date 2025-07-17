@@ -1,14 +1,12 @@
-// InvoicePage.jsx
 import React, { useEffect, useState } from 'react';
 import TopNav from '../components/TopNav';
 import InvoiceChart from '../components/InvoiceChart';
 import AddInvoice from '../components/AddInvoice';
-import { deleteItem } from '../utils/api';
-import axios from 'axios';
+import { api, deleteItem } from '../utils/api';
 import { getToken } from '../utils/auth';
 import { usePaginationList } from '../components/usePaginationList';
 import { exportToCSV } from '../utils/exportToCSV';
-import InvoiceReceiptGallery from '../components/InvoiceReceiptGallery'; // 갤러리 컴포넌트 import
+import InvoiceReceiptGallery from '../components/InvoiceReceiptGallery';
 import '../styles/invoicepage.css';
 
 const InvoicePage = () => {
@@ -18,9 +16,7 @@ const InvoicePage = () => {
 
     const fetchInvoices = async () => {
         try {
-            const res = await axios.get('http://127.0.0.1:8000/api/invoices/', {
-                headers: { Authorization: `Bearer ${getToken()}` }
-            });
+            const res = await api.get('/invoices/');
             setInvoices(res.data);
         } catch (err) {
             console.error("Failed to fetch invoices", err);
@@ -47,7 +43,7 @@ const InvoicePage = () => {
 
     const handleDelete = async (id) => {
         if (!window.confirm("Delete this invoice?")) return;
-        const ok = await deleteItem(`http://127.0.0.1:8000/api/invoices/${id}/`);
+        const ok = await deleteItem(`/invoices/${id}/`); // 수정된 부분
         if (ok) setInvoices(prev => prev.filter(inv => inv.id !== id));
         else alert("Failed to delete invoice!");
     };

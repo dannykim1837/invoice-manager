@@ -4,24 +4,20 @@ import { logout } from '../utils/auth';
 import { FaUserCircle, FaBars, FaTimes } from 'react-icons/fa';
 
 const TopNav = () => {
-    // User info state
     const [loginUser, setLoginUser] = useState(null);
-    useEffect(() => {
-        try {
-            const u = JSON.parse(localStorage.getItem('user'));
-            setLoginUser(u);
-        } catch { }
-    }, []);
-
-    // Hamburger menu
     const [open, setOpen] = useState(false);
-    const navigate = useNavigate();
-
-    // Profile dropdown menu
     const [dropdown, setDropdown] = useState(false);
     const dropdownRef = useRef(null);
+    const navigate = useNavigate();
 
-    // Dropdown outside click close
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setLoginUser(JSON.parse(storedUser));
+        }
+    }, []);
+
+    // Close dropdown when clicking outside
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -31,16 +27,11 @@ const TopNav = () => {
         if (dropdown) {
             document.addEventListener('mousedown', handleClickOutside);
         }
-        return () => document.removeEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
     }, [dropdown]);
 
-    // Dropdown menu action
-    const handleProfileClick = () => setDropdown((prev) => !prev);
-    const handleGoProfile = () => {
-        navigate('/profile');
-        setDropdown(false);
-        setOpen(false);
-    };
     const handleLogout = () => {
         logout();
         setDropdown(false);
@@ -51,7 +42,11 @@ const TopNav = () => {
         <nav className="top-nav">
             {/* Left: nav menu */}
             <div className="nav-left">
-                <button className="hamburger" onClick={() => setOpen(!open)}>
+                <button
+                    className="hamburger"
+                    onClick={() => setOpen(!open)}
+                    aria-label="Toggle navigation menu"
+                >
                     {open ? <FaTimes size={24} /> : <FaBars size={24} />}
                 </button>
                 <ul className={`nav-links ${open ? 'open' : ''}`}>
@@ -60,20 +55,30 @@ const TopNav = () => {
                     <li><Link to="/expenses" onClick={() => setOpen(false)}>Expenses</Link></li>
                 </ul>
             </div>
-            {/* Right: welcome, profile dropdown */}
+
+            {/* Right: user info + profile dropdown */}
             <div className="nav-right">
                 {loginUser && (
                     <div className="nav-username">
-                        <span>Welcome, <b>{loginUser.username || loginUser.email || loginUser.id}</b></span>
+                        <span>
+                            Welcome, <b>{loginUser.username || loginUser.email || loginUser.id}</b>
+                        </span>
                     </div>
                 )}
                 <div className="profile-icon" ref={dropdownRef}>
-                    <div onClick={handleProfileClick} style={{ cursor: 'pointer' }}>
+                    <button
+                        onClick={() => setDropdown((prev) => !prev)}
+                        className="profile-toggle-btn"
+                        aria-label="Open profile menu"
+                        style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+                    >
                         <FaUserCircle size={32} />
-                    </div>
+                    </button>
                     {dropdown && (
                         <div className="profile-dropdown">
-                            <button onClick={handleGoProfile}>Profile</button>
+                            <button onClick={() => { navigate('/profile'); setDropdown(false); setOpen(false); }}>
+                                Profile
+                            </button>
                             <button onClick={handleLogout}>Logout</button>
                         </div>
                     )}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { api } from '../utils/api';
 import { useNavigate, Link } from 'react-router-dom';
 import '../styles/loginStyle.css';
 
@@ -11,7 +11,7 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://127.0.0.1:8000/api/token/', form);
+            const res = await api.post('/token/', form);
             localStorage.setItem('token', res.data.access);
             navigate('/dashboard');
         } catch (err) {
