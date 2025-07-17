@@ -1,0 +1,453 @@
+body,
+.expense-root {
+    padding: 0;
+    margin: 0;
+    background: linear-gradient(135deg, #f7f9fa 40%, #e7f3f5 100%);
+    min-height: 100vh;
+}
+
+/* Header */
+.expense-root .page-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 26px;
+    padding-left: 6px;
+}
+
+.expense-root .page-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #15a76b;
+}
+
+/* Main layout */
+.expense-root .expense-main-content {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 3vw 60px 3vw;
+}
+
+/* Summary section */
+.expense-root .expense-summary-section {
+    margin-top: 30px;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+.expense-root .expense-summary-cards {
+    display: flex;
+    gap: 22px;
+}
+
+.expense-root .stat-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 7px rgba(34, 51, 84, 0.09);
+    padding: 20px 28px 16px 26px;
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.expense-root .stat-main {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #15a76b;
+}
+
+.expense-root .stat-label {
+    color: #8b98b7;
+    font-size: 1.03rem;
+    margin-top: 7px;
+}
+
+.expense-root .expense-chart-box {
+    flex: 1 1 340px;
+    min-width: 320px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 7px rgba(34, 51, 84, 0.09);
+    padding: 20px 26px 18px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* List section */
+.expense-root .expense-list-section {
+    margin-top: 44px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 1px 10px rgba(34, 51, 84, 0.09);
+    padding: 36px 24px 24px 24px;
+}
+
+.expense-root .expense-list-container {
+    padding: 0;
+}
+
+/* Add Expense Form */
+.expense-root .add-expense-form-wrapper {
+    padding: 0;
+    margin-bottom: 18px;
+}
+
+.expense-root .add-expense-form-horizontal {
+    background: #f7faff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(70, 100, 170, 0.05);
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 13px;
+    align-items: flex-end;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 24px 14px 24px;
+}
+
+.expense-root .add-expense-form-horizontal input {
+    font-size: 1.04rem;
+    padding: 11px 13px;
+    border: 1.2px solid #ccd6e3;
+    border-radius: 7px;
+    background: #fff;
+    transition: border 0.15s, box-shadow 0.15s;
+    outline: none;
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: unset;
+}
+
+.expense-root .add-expense-form-horizontal input[type="date"] {
+    min-width: 120px;
+}
+
+.expense-root .add-expense-form-horizontal input:focus {
+    border: 1.4px solid #15a76b;
+    background: #f8fcff;
+}
+
+.expense-root .add-expense-form-horizontal button[type="submit"] {
+    padding: 11px 22px;
+    background: #15a76b;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1.06rem;
+    box-shadow: 0 2px 8px rgba(50, 180, 120, 0.07);
+    cursor: pointer;
+    transition: background 0.13s, transform 0.14s;
+    flex: none;
+}
+
+.expense-root .add-expense-form-horizontal button[type="submit"]:hover {
+    background: #119b5a;
+    transform: translateY(-1px) scale(1.03);
+}
+
+.expense-root .add-expense-error {
+    color: #e04444;
+    font-size: 1rem;
+    margin-left: 10px;
+    font-weight: 500;
+    text-align: left;
+    flex-basis: 100%;
+}
+
+/* Search bar & export row */
+.expense-root .expense-search-bar-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    width: 100%;
+    gap: 0;
+}
+
+.expense-root .expense-search-input {
+    flex: 1;
+    max-width: 460px;
+    min-width: 220px;
+    box-sizing: border-box;
+    padding: 8px 15px;
+    border: 1.3px solid #dbe3f2;
+    border-radius: 7px;
+    font-size: 1.08rem;
+    outline: none;
+    transition: border 0.15s;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(34, 51, 84, 0.03);
+    margin-right: 10px;
+}
+
+.expense-root .expense-search-input:focus {
+    border: 1.3px solid #15a76b;
+    background: #f7fafd;
+}
+
+.expense-root .export-buttons {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+.expense-root .export-buttons button {
+    background: #15a76b !important;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px 28px;
+    box-shadow: 0 2px 8px rgba(50, 180, 120, 0.07);
+    cursor: pointer;
+    transition: background 0.14s, transform 0.14s;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.expense-root .export-buttons button:hover:not(:disabled) {
+    background: #119b5a !important;
+    color: #fff !important;
+    transform: translateY(-1px) scale(1.03);
+}
+
+.expense-root .export-buttons button:disabled {
+    color: #aaa !important;
+    background: #a9e7cd !important;
+    border: none;
+    cursor: not-allowed;
+}
+
+/* UploadReceipt button */
+.expense-root .upload-receipt-wrapper button {
+    background: #15a76b;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 10px 26px;
+    box-shadow: 0 2px 8px rgba(50, 180, 120, 0.07);
+    cursor: pointer;
+    transition: background 0.14s, transform 0.14s;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 12px;
+}
+
+.expense-root .upload-receipt-wrapper button:hover:not(:disabled) {
+    background: #119b5a;
+    transform: translateY(-1px) scale(1.03);
+}
+
+.expense-root .upload-receipt-wrapper button:disabled {
+    background: #a9e7cd;
+    color: #eee;
+    cursor: not-allowed;
+}
+
+/* Expense Card */
+.expense-root .expense-card {
+    background: #f8fbfe;
+    border-radius: 12px;
+    box-shadow: 0 1px 7px rgba(34, 51, 84, 0.06);
+    padding: 0;
+    min-height: 76px;
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.expense-root .expense-card-inner {
+    padding: 16px 24px 10px 24px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.expense-root .expense-card-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.expense-root .expense-card-title {
+    font-size: 1.07rem;
+    font-weight: 600;
+    color: #28346d;
+}
+
+.expense-root .expense-delete-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: #e04c4c;
+    margin-left: 8px;
+}
+
+.expense-root .expense-category-badge-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.expense-root .expense-category-badge {
+    padding: 3px 16px;
+    border-radius: 11px;
+    font-size: 0.97rem;
+    font-weight: 700;
+    background: #eef2fc;
+    color: #15a76b;
+    text-transform: capitalize;
+    display: inline-block;
+}
+
+.expense-root .expense-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+}
+
+.expense-root .expense-amount {
+    font-weight: 600;
+    color: #15a76b;
+    font-size: 1.03rem;
+}
+
+.expense-root .expense-date {
+    color: #8395b8;
+    font-size: 0.93rem;
+}
+
+.expense-root .empty-list-message {
+    color: #b5b8c3;
+    font-size: 1.07rem;
+    text-align: center;
+    margin: 18px 0 0 0;
+}
+
+/* Pagination */
+.expense-root .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.expense-root .pagination button {
+    background: #e7f3f5;
+    border: none;
+    color: #15a76b;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    padding: 4px 14px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.13s, color 0.13s;
+}
+
+.expense-root .pagination button:hover:not(:disabled) {
+    background: #ccf2e5;
+    color: #119b5a;
+}
+
+.expense-root .pagination button:disabled {
+    background: #eef2fa;
+    color: #aaa;
+    cursor: not-allowed;
+}
+
+.expense-root .pagination span {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #15a76b;
+    letter-spacing: 0.5px;
+}
+
+/* Receipt Section */
+.receipt-section {
+    margin: 32px 0 18px 0;
+    padding: 22px 22px 18px 22px;
+    background: #f7faff;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(70, 100, 170, 0.06);
+}
+
+/* .receipt-section h3 {
+    margin: 0 0 12px 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #15a76b;
+} */
+
+.receipt-preview-box {
+    width: 110px;
+    height: 110px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(34, 51, 84, 0.07);
+    padding: 8px;
+    margin-top: 12px;
+    box-sizing: border-box;
+}
+
+.receipt-preview-image {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .expense-root .expense-summary-section {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .expense-root .expense-main-content {
+        padding: 0 1vw 20px 1vw;
+    }
+
+    .expense-root .add-expense-form-horizontal {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 9px;
+        padding: 8px 0 8px 0;
+    }
+
+    .expense-root .add-expense-form-horizontal input,
+    .expense-root .add-expense-form-horizontal button[type="submit"] {
+        min-width: 0;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .expense-root .expense-card-inner {
+        padding: 16px 12px 10px 12px;
+    }
+}
+
+.expense-root .expense-title {
+    color: #15a76b;
+    font-weight: 700;
+    font-size: 1.15rem;
+}
+
